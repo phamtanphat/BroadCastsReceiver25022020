@@ -10,6 +10,7 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -40,6 +41,16 @@ public class MainActivity extends AppCompatActivity {
             ConnectivityManager connectivityManager =
                     (ConnectivityManager) getSystemService(CONNECTIVITY_SERVICE);
             NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
+            if (networkInfo.getType() == ConnectivityManager.TYPE_MOBILE){
+                Toast.makeText(context, "Da ket noi voi 3g", Toast.LENGTH_SHORT).show();
+            }else{
+                Toast.makeText(context, "Ban khong co 3g", Toast.LENGTH_SHORT).show();
+            }
+            if (networkInfo.getType() == ConnectivityManager.TYPE_WIFI){
+                Toast.makeText(context, "Da ket noi voi wifi", Toast.LENGTH_SHORT).show();
+            }else{
+                Toast.makeText(context, "Ban khong wifi", Toast.LENGTH_SHORT).show();
+            }
         }
     };
 }
