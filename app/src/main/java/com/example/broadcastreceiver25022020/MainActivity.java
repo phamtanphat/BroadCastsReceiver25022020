@@ -32,7 +32,9 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        unregisterReceiver();
+        if (broadcastReceiver != null){
+            unregisterReceiver(broadcastReceiver);
+        }
     }
 
     BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
@@ -41,16 +43,21 @@ public class MainActivity extends AppCompatActivity {
             ConnectivityManager connectivityManager =
                     (ConnectivityManager) getSystemService(CONNECTIVITY_SERVICE);
             NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
-            if (networkInfo.getType() == ConnectivityManager.TYPE_MOBILE){
-                Toast.makeText(context, "Da ket noi voi 3g", Toast.LENGTH_SHORT).show();
+            if (networkInfo != null){
+                if (networkInfo.getType() == ConnectivityManager.TYPE_MOBILE){
+                    Toast.makeText(context, "Da ket noi voi 3g", Toast.LENGTH_SHORT).show();
+                }else{
+                    Toast.makeText(context, "Ban khong co 3g", Toast.LENGTH_SHORT).show();
+                }
+                if (networkInfo.getType() == ConnectivityManager.TYPE_WIFI){
+                    Toast.makeText(context, "Da ket noi voi wifi", Toast.LENGTH_SHORT).show();
+                }else{
+                    Toast.makeText(context, "Ban khong wifi", Toast.LENGTH_SHORT).show();
+                }
             }else{
-                Toast.makeText(context, "Ban khong co 3g", Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, "Ban khong co ket noi", Toast.LENGTH_SHORT).show();
             }
-            if (networkInfo.getType() == ConnectivityManager.TYPE_WIFI){
-                Toast.makeText(context, "Da ket noi voi wifi", Toast.LENGTH_SHORT).show();
-            }else{
-                Toast.makeText(context, "Ban khong wifi", Toast.LENGTH_SHORT).show();
-            }
+
         }
     };
 }
